@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #faf8ef;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #776e65;
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        
+        .game-container {
+            position: relative;
+            display: inline-block;
+            background-color: #bbada0;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 20px auto;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            width: 340px;
+            height: 340px;
+        }
+        
+        .tile {
+            width: 70px;
+            height: 70px;
+            background-color: #cdc1b4;
+            border-radius: 3px;
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.15s ease-in-out;
+            position: relative;
+        }
+        
+        .tile-2 { background-color: #eee4da; color: #776e65; }
+        .tile-4 { background-color: #ede0c8; color: #776e65; }
+        .tile-8 { background-color: #f2b179; color: #f9f6f2; }
+        .tile-16 { background-color: #f59563; color: #f9f6f2; }
+        .tile-32 { background-color: #f67c5f; color: #f9f6f2; }
+        .tile-64 { background-color: #f65e3b; color: #f9f6f2; }
+        .tile-128 { background-color: #edcf72; color: #f9f6f2; font-size: 28px; }
+        .tile-256 { background-color: #edcc61; color: #f9f6f2; font-size: 28px; }
+        .tile-512 { background-color: #edc850; color: #f9f6f2; font-size: 28px; }
+        .tile-1024 { background-color: #edc53f; color: #f9f6f2; font-size: 24px; }
+        .tile-2048 { background-color: #edc22e; color: #f9f6f2; font-size: 24px; }
+        
+        .tile-new {
+            animation: appear 0.2s ease-in-out;
+        }
+        
+        .tile-merged {
+            animation: merge 0.2s ease-in-out;
+        }
+        
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes merge {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .score-container {
+            color: #776e65;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        .score {
+            font-weight: bold;
+            color: #4a4a4a;
+        }
+        
+        .button-container {
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: #8f7a66;
+            color: #f9f6f2;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #9f8a76;
+        }
+        
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            color: #776e65;
+            font-weight: bold;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .instructions {
+            color: #776e65;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>2048</h1>
+    <div class="score-container">
+        スコア: <span class="score" id="score">0</span>
+    </div>
+    <div class="button-container">
+        <button onclick="newGame()">新しいゲーム</button>
+        <button onclick="saveGame()">保存</button>
+        <button onclick="loadGame()">読み込み</button>
+    </div>
+    <div class="game-container">
+        <div class="game-board" id="game-board"></div>
+        <div class="game-over" id="game-over">Game Over!</div>
+    </div>
+    <div class="instructions">
+        矢印キーまたはWASDで操作
+    </div>
+    
+    <script>
+        let currentGame = null;
+        let isAnimating = false;
+        
+        function initBoard() {
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+            for (let i = 0; i < 16; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.id = `tile-${Math.floor(i/4)}-${i%4}`;
+                board.appendChild(tile);
+            }
+        }
+        
+        function updateBoard(game) {
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    const tile = document.getElementById(`tile-${i}-${j}`);
+                    const value = game.board[i][j];
+                    tile.textContent = value > 0 ? value : '';
+                    tile.className = value > 0 ? `tile tile-${value}` : 'tile';
+                }
+            }
+            document.getElementById('score').textContent = game.score;
+            
+            if (!game.gameOn) {
+                document.getElementById('game-over').style.display = 'flex';
+            } else {
+                document.getElementById('game-over').style.display = 'none';
+            }
+        }
+        
+        async function newGame() {
+            const response = await fetch('/api/new');
+            currentGame = await response.json();
+            updateBoard(currentGame);
+        }
+        
+        async function move(direction) {
+            if (!currentGame || !currentGame.gameOn || isAnimating) return;
+            
+            isAnimating = true;
+            const response = await fetch('/api/move', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    direction: direction,
+                    game: currentGame
+                })
+            });
+            
+            currentGame = await response.json();
+            updateBoard(currentGame);
+            
+            setTimeout(() => {
+                isAnimating = false;
+            }, 150);
+        }
+        
+        async function saveGame() {
+            if (!currentGame) return;
+            
+            await fetch('/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(currentGame)
+            });
+            
+            alert('ゲームを保存しました！');
+        }
+        
+        async function loadGame() {
+            const response = await fetch('/api/load');
+            currentGame = await response.json();
+            updateBoard(currentGame);
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            const keyMap = {
+                'ArrowLeft': 'left',
+                'ArrowRight': 'right',
+                'ArrowUp': 'up',
+                'ArrowDown': 'down',
+                'a': 'left',
+                'A': 'left',
+                'd': 'right',
+                'D': 'right',
+                'w': 'up',
+                'W': 'up',
+                's': 'down',
+                'S': 'down'
+            };
+            
+            if (keyMap[e.key]) {
+                e.preventDefault();
+                move(keyMap[e.key]);
+            }
+        });
+        
+        window.onload = () => {
+            initBoard();
+            loadGame();
+        };
+    </script>
+</body>
+</html>

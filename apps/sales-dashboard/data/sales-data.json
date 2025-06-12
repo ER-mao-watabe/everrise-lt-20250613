@@ -1,0 +1,70 @@
+{
+  "salesData": [
+    {
+      "month": "2024-01",
+      "revenue": 1250000,
+      "products": [
+        {"name": "商品A", "quantity": 150, "amount": 450000},
+        {"name": "商品B", "quantity": 100, "amount": 300000},
+        {"name": "商品C", "quantity": 200, "amount": 250000},
+        {"name": "商品D", "quantity": 80, "amount": 150000},
+        {"name": "商品E", "quantity": 50, "amount": 100000}
+      ]
+    },
+    {
+      "month": "2024-02",
+      "revenue": 1380000,
+      "products": [
+        {"name": "商品A", "quantity": 180, "amount": 540000},
+        {"name": "商品B", "quantity": 110, "amount": 330000},
+        {"name": "商品C", "quantity": 190, "amount": 237500},
+        {"name": "商品D", "quantity": 90, "amount": 162000},
+        {"name": "商品E", "quantity": 55, "amount": 110500}
+      ]
+    },
+    {
+      "month": "2024-03",
+      "revenue": 1520000,
+      "products": [
+        {"name": "商品A", "quantity": 200, "amount": 600000},
+        {"name": "商品B", "quantity": 120, "amount": 360000},
+        {"name": "商品C", "quantity": 210, "amount": 262500},
+        {"name": "商品D", "quantity": 85, "amount": 170000},
+        {"name": "商品E", "quantity": 65, "amount": 127500}
+      ]
+    },
+    {
+      "month": "2024-04",
+      "revenue": 1450000,
+      "products": [
+        {"name": "商品A", "quantity": 170, "amount": 510000},
+        {"name": "商品B", "quantity": 130, "amount": 390000},
+        {"name": "商品C", "quantity": 180, "amount": 225000},
+        {"name": "商品D", "quantity": 95, "amount": 190000},
+        {"name": "商品E", "quantity": 70, "amount": 135000}
+      ]
+    },
+    {
+      "month": "2024-05",
+      "revenue": 1680000,
+      "products": [
+        {"name": "商品A", "quantity": 220, "amount": 660000},
+        {"name": "商品B", "quantity": 140, "amount": 420000},
+        {"name": "商品C", "quantity": 230, "amount": 287500},
+        {"name": "商品D", "quantity": 100, "amount": 200000},
+        {"name": "商品E", "quantity": 60, "amount": 112500}
+      ]
+    },
+    {
+      "month": "2024-06",
+      "revenue": 1750000,
+      "products": [
+        {"name": "商品A", "quantity": 230, "amount": 690000},
+        {"name": "商品B", "quantity": 150, "amount": 450000},
+        {"name": "商品C", "quantity": 240, "amount": 300000},
+        {"name": "商品D", "quantity": 85, "amount": 170000},
+        {"name": "商品E", "quantity": 70, "amount": 140000}
+      ]
+    }
+  ]
+}

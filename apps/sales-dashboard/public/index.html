@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>売上ダッシュボード</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>売上分析ダッシュボード</h1>
+        
+        <!-- フィルタリングセクション -->
+        <div class="filter-section">
+            <h2>フィルター設定</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="startMonth">開始月:</label>
+                    <input type="month" id="startMonth" value="2024-01">
+                </div>
+                <div class="filter-group">
+                    <label for="endMonth">終了月:</label>
+                    <input type="month" id="endMonth" value="2024-06">
+                </div>
+                <div class="filter-group">
+                    <label for="productFilter">商品:</label>
+                    <select id="productFilter">
+                        <option value="">全商品</option>
+                        <option value="商品A">商品A</option>
+                        <option value="商品B">商品B</option>
+                        <option value="商品C">商品C</option>
+                        <option value="商品D">商品D</option>
+                        <option value="商品E">商品E</option>
+                    </select>
+                </div>
+                <button id="applyFilter" class="btn-filter">フィルター適用</button>
+                <button id="resetFilter" class="btn-reset">リセット</button>
+            </div>
+        </div>
+
+        <!-- 月別売上グラフ -->
+        <div class="chart-container">
+            <h2>月別売上推移</h2>
+            <canvas id="monthlyChart"></canvas>
+        </div>
+
+        <!-- 商品別売上ランキング -->
+        <div class="chart-container">
+            <h2>商品別売上ランキング</h2>
+            <canvas id="rankingChart"></canvas>
+        </div>
+
+        <!-- 売上予測グラフ -->
+        <div class="chart-container">
+            <h2>売上予測</h2>
+            <canvas id="forecastChart"></canvas>
+            <div class="forecast-info" id="forecastInfo"></div>
+        </div>
+
+        <!-- サマリー情報 -->
+        <div class="summary-section">
+            <h2>売上サマリー</h2>
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <h3>期間合計売上</h3>
+                    <p class="summary-value" id="totalRevenue">-</p>
+                </div>
+                <div class="summary-card">
+                    <h3>月平均売上</h3>
+                    <p class="summary-value" id="avgRevenue">-</p>
+                </div>
+                <div class="summary-card">
+                    <h3>最高売上月</h3>
+                    <p class="summary-value" id="maxMonth">-</p>
+                </div>
+                <div class="summary-card">
+                    <h3>成長率</h3>
+                    <p class="summary-value" id="growthRate">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

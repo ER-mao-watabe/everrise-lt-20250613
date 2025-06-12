@@ -1,0 +1,14 @@
+{
+  "name": "lt-slide",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --port 3030 --remote",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^51.8.1",
+    "@slidev/theme-default": "latest"
+  }
+}

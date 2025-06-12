@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リアルタイムチャット</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="username-modal" id="usernameModal">
+            <div class="modal-content">
+                <h2>ユーザー名を入力してください</h2>
+                <input type="text" id="usernameInput" placeholder="ユーザー名" maxlength="20">
+                <button id="setUsernameBtn">入室する</button>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer" style="display: none;">
+            <div class="chat-header">
+                <h1>💬 リアルタイムチャット</h1>
+                <span class="username-display" id="usernameDisplay"></span>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="messages" id="messages"></div>
+            </div>
+
+            <div class="input-container">
+                <div class="emoji-picker">
+                    <button class="emoji-btn" onclick="insertEmoji('😊')">😊</button>
+                    <button class="emoji-btn" onclick="insertEmoji('😂')">😂</button>
+                    <button class="emoji-btn" onclick="insertEmoji('❤️')">❤️</button>
+                    <button class="emoji-btn" onclick="insertEmoji('👍')">👍</button>
+                    <button class="emoji-btn" onclick="insertEmoji('🎉')">🎉</button>
+                    <button class="emoji-btn" onclick="insertEmoji('🔥')">🔥</button>
+                    <button class="emoji-btn" onclick="insertEmoji('✨')">✨</button>
+                    <button class="emoji-btn" onclick="insertEmoji('💯')">💯</button>
+                </div>
+                <form id="messageForm">
+                    <input type="text" id="messageInput" placeholder="メッセージを入力..." autocomplete="off">
+                    <button type="submit">送信</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
